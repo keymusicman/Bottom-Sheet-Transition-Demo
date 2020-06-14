@@ -89,15 +89,9 @@ class BottomSheetSharedTransition : Transition {
     }
 
     private fun prepareAlphaAnimator(view: View): Animator =
-        ObjectAnimator.ofFloat(
-            view,
-            "alpha",
-            0f,
-            1f
-        )
+        ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
             .apply {
-                duration =
-                    ANIMATION_DURATION
+                duration = ANIMATION_DURATION
                 interpolator = AccelerateInterpolator()
             }
 
@@ -107,8 +101,7 @@ class BottomSheetSharedTransition : Transition {
         view: View
     ) = ValueAnimator.ofInt(startHeight, endHeight)
         .apply {
-            duration =
-                ANIMATION_DURATION
+            duration = ANIMATION_DURATION
 
             addUpdateListener { animation ->
                 (view.parent as? View)?.apply {
@@ -122,8 +115,7 @@ class BottomSheetSharedTransition : Transition {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     (view.parent as? View)?.apply {
-                        layoutParams.height =
-                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
                         layoutParams = layoutParams
                     }
                 }
@@ -143,7 +135,8 @@ class BottomSheetSharedTransition : Transition {
         // Попросим View измерить себя при указанной ширине экрана
         val widthMeasureSpec =
             View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.EXACTLY)
-        val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        val heightMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
 
         return view
             // измеряем:
@@ -161,10 +154,11 @@ class BottomSheetSharedTransition : Transition {
         getDisplaySize(view).x
 
     private fun getDisplaySize(view: View) =
-        Point().also {
-            (view.context.getSystemService(
-                Context.WINDOW_SERVICE
-            ) as WindowManager).defaultDisplay.getSize(it)
+        Point().also { point ->
+            view.context.getSystemService(Context.WINDOW_SERVICE)
+                .let { it as WindowManager }
+                .defaultDisplay
+                .getSize(point)
         }
 
     private fun getStatusBarHeight(context: Context): Int =
