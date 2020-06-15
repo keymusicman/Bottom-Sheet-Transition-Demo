@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.doOnStart
+import androidx.core.view.updateLayoutParams
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class BottomSheetSharedTransition : Transition {
@@ -50,10 +51,13 @@ class BottomSheetSharedTransition : Transition {
 
         // ... and then pin parent height to specific value.
         // It's needed for fragment container not to jump during transition
-        (transitionValues.view.parent as View).apply {
-            this.layoutParams.height = this.height
-            this.layoutParams = this.layoutParams
-        }
+        transitionValues.view.parent
+            .let { it as? View }
+            ?.also { view ->
+                view.updateLayoutParams<ViewGroup.LayoutParams> {
+                    height = view.height
+                }
+            }
     }
 
     override fun captureEndValues(transitionValues: TransitionValues) {
@@ -104,20 +108,26 @@ class BottomSheetSharedTransition : Transition {
             duration = ANIMATION_DURATION
 
             addUpdateListener { animation ->
-                (view.parent as? View)?.apply {
-                    layoutParams.height = animation.animatedValue as Int
-                    layoutParams = layoutParams
-                }
+                view.parent
+                    .let { it as? View }
+                    ?.also { view ->
+                        view.updateLayoutParams<ViewGroup.LayoutParams> {
+                            height = animation.animatedValue as Int
+                        }
+                    }
             }
             addListener(object : Animator.AnimatorListener {
                 override fun onAnimationRepeat(animation: Animator?) {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    (view.parent as? View)?.apply {
-                        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                        layoutParams = layoutParams
-                    }
+                    view.parent
+                        .let { it as? View }
+                        ?.also { view ->
+                            view.updateLayoutParams<ViewGroup.LayoutParams> {
+                                height = ViewGroup.LayoutParams.WRAP_CONTENT
+                            }
+                        }
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
