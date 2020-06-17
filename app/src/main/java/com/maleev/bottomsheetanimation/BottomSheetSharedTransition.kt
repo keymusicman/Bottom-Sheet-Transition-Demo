@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
-import androidx.core.animation.doOnStart
+import androidx.core.animation.doOnEnd
 import androidx.core.view.updateLayoutParams
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -45,12 +45,11 @@ class BottomSheetSharedTransition : Transition {
     override fun getTransitionProperties(): Array<String> = TransitionProperties
 
     override fun captureStartValues(transitionValues: TransitionValues) {
-        // we capture current fragment height...
+        // Запоминаем начальную высоту View...
         transitionValues.values[PROP_HEIGHT] = transitionValues.view.height
         transitionValues.values[PROP_VIEW_TYPE] = "start"
 
-        // ... and then pin parent height to specific value.
-        // It's needed for fragment container not to jump during transition
+        // ... и затем закрепляем высоту контейнера фрагмента
         transitionValues.view.parent
             .let { it as? View }
             ?.also { view ->
@@ -58,11 +57,11 @@ class BottomSheetSharedTransition : Transition {
                     height = view.height
                 }
             }
+
     }
 
     override fun captureEndValues(transitionValues: TransitionValues) {
-        // for end values we should re-measure parent as earlier we pinned its height
-        // and new fragment cannot take height it needs
+        // Измеряем и запоминаем высоту View
         transitionValues.values[PROP_HEIGHT] = getViewHeight(transitionValues.view.parent as View)
         transitionValues.values[PROP_VIEW_TYPE] = "end"
     }
@@ -82,22 +81,20 @@ class BottomSheetSharedTransition : Transition {
                 endValues.values[PROP_HEIGHT] as Int,
                 endValues.view
             ),
-            prepareAlphaAnimator(endValues.view)
+            prepareFadeInAnimator(endValues.view)
         )
 
         return AnimatorSet()
             .apply {
+                duration = ANIMATION_DURATION
                 playTogether(animators)
-                doOnStart { startValues.view.alpha = 0f }
             }
     }
 
-    private fun prepareAlphaAnimator(view: View): Animator =
-        ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-            .apply {
-                duration = ANIMATION_DURATION
-                interpolator = AccelerateInterpolator()
-            }
+    private fun prepareFadeInAnimator(view: View): Animator =
+        ObjectAnimator
+            .ofFloat(view, "alpha", 0f, 1f)
+            .apply { interpolator = AccelerateInterpolator() }
 
     private fun prepareHeightAnimator(
         startHeight: Int,
@@ -105,37 +102,21 @@ class BottomSheetSharedTransition : Transition {
         view: View
     ) = ValueAnimator.ofInt(startHeight, endHeight)
         .apply {
-            duration = ANIMATION_DURATION
+            val container = view.parent.let { it as View }
 
+            // изменяем высоту контейнера фрагментов
             addUpdateListener { animation ->
-                view.parent
-                    .let { it as? View }
-                    ?.also { view ->
-                        view.updateLayoutParams<ViewGroup.LayoutParams> {
-                            height = animation.animatedValue as Int
-                        }
-                    }
+                container.updateLayoutParams<ViewGroup.LayoutParams> {
+                    height = animation.animatedValue as Int
+                }
             }
-            addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) {
-                }
 
-                override fun onAnimationEnd(animation: Animator?) {
-                    view.parent
-                        .let { it as? View }
-                        ?.also { view ->
-                            view.updateLayoutParams<ViewGroup.LayoutParams> {
-                                height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            }
-                        }
+            // окончании анимации устанавливаем высоту контейнера WRAP_CONTENT
+            doOnEnd {
+                container.updateLayoutParams<ViewGroup.LayoutParams> {
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
                 }
-
-                override fun onAnimationCancel(animation: Animator?) {
-                }
-
-                override fun onAnimationStart(animation: Animator?) {
-                }
-            })
+            }
         }
 
     private fun getViewHeight(view: View): Int {
