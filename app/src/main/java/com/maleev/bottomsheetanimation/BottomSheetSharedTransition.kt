@@ -14,9 +14,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.view.updateLayoutParams
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class BottomSheetSharedTransition : Transition {
@@ -86,15 +86,14 @@ class BottomSheetSharedTransition : Transition {
 
         return AnimatorSet()
             .apply {
+                interpolator = FastOutSlowInInterpolator()
                 duration = ANIMATION_DURATION
                 playTogether(animators)
             }
     }
 
     private fun prepareFadeInAnimator(view: View): Animator =
-        ObjectAnimator
-            .ofFloat(view, "alpha", 0f, 1f)
-            .apply { interpolator = AccelerateInterpolator() }
+        ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
 
     private fun prepareHeightAnimator(
         startHeight: Int,
