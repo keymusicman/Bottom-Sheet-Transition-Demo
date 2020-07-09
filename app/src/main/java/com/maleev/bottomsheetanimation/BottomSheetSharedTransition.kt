@@ -93,7 +93,7 @@ class BottomSheetSharedTransition : Transition {
     }
 
     private fun prepareFadeInAnimator(view: View): Animator =
-        ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+        ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f)
 
     private fun prepareHeightAnimator(
         startHeight: Int,
