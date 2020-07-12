@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Bottom Sheet Animation Demo</string>
+    <string name="hint_click_button_to_show_bottom_sheet">Press the button below to see examples of fragments animation inside Bottom Sheet:</string>
+    <string name="btn_show_bottom_sheet">Show Bottom Sheet Dialog</string>
+    <string name="hint_pre_lollipop">Your device version is below LOLLIPOP, the animation demo will not work inside Bottom Sheet :-(</string>
+    <string name="title_fullscreen_fragment">Fullscreen fragment</string>
+    <string name="hint_back_button">This button will bring you back:</string>
+    <string name="button_back">Go back</string>
+    <string name="hint_darth_vader">This is Darth Vader. He is here for two reasons:</string>
+    <string name="hint_reason_1">1. I like Star Wars</string>
+    <string name="hint_reason_2">2. I need to increase the height of this fragment</string>
+    <string name="hint_reason_3">3. Two reasons was not enough to increase the height of fragment</string>
+    <string name="hint_loading_delay">This text has been shown with 3 seconds delay to simulate long data loading</string>
+    <string name="hint_click_to_move_next">Press any of buttons below to show the next fragment</string>
+    <string name="button_show_big_fragment">Show high fragment</string>
+    <string name="button_show_small_fragment">Show small fragment</string>
+    <string name="button_show_fullscreen_fragment">Show fullscreen fragment</string>
+    <string name="button_show_long_loading_fragment">Show long data loading fragment</string>
+</resources>

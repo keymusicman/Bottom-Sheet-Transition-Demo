@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Bottom Sheet Animation Demo</string>
+    <string name="hint_click_button_to_show_bottom_sheet">Чтобы увидеть примеры анимации переходов между фрагментами, нажмите кнопку ниже:</string>
+    <string name="btn_show_bottom_sheet">Показать Bottom Sheet Dialog</string>
+    <string name="hint_pre_lollipop">Версия вашего устройства ниже LOLLIPOP, поэтому демо анимации внутри Bottom Sheet не будет работать :-(</string>
+    <string name="title_fullscreen_fragment">Полноэкранный фрагмент</string>
+    <string name="hint_back_button">Эта кнопка вернёт вас обратно:</string>
+    <string name="button_back">Вернуться обратно</string>
+    <string name="hint_darth_vader">Это Дарт Вейдер. Я вставил его сюда по двум причинам:</string>
+    <string name="hint_reason_1">1. Мне нравятся Звёздные Войны</string>
+    <string name="hint_reason_2">2. Мне нужно было чем-то увеличить высоту фрагмента</string>
+    <string name="hint_reason_3">3. Двух причин не хватило для \nувеличения высоты</string>
+    <string name="hint_loading_delay">Этот текст был показан из кода с задержкой в 3 секунды для имитации долгой загрузки данных</string>
+    <string name="hint_click_to_move_next">Нажмите на кнопку ниже, чтобы перейти на следующий фрагмент</string>
+    <string name="button_show_big_fragment">Показать большой фрагмент</string>
+    <string name="button_show_small_fragment">Показать маленький фрагмент</string>
+    <string name="button_show_fullscreen_fragment">Показать полноэкранный фрагмент</string>
+    <string name="button_show_long_loading_fragment">Показать фрагмент с долгой загрузкой</string>
+</resources>

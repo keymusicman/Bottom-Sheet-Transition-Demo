@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_arrow_back_24px"
-        app:title="Полноэкранный фрагмент" />
+        app:title="@string/title_fullscreen_fragment" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

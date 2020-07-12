@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Эта кнопка вернёт вас обратно:"
+        android:text="@string/hint_back_button"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:minWidth="250dp"
-        android:text="Вернуться обратно" />
+        android:text="@string/button_back" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="140dp"
@@ -35,7 +35,7 @@
         android:layout_marginTop="8dp"
 
         android:gravity="center_horizontal"
-        android:text="Это Дарт Вейдер. Я вставил его сюда  по двум причинам:"
+        android:text="@string/hint_darth_vader"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="1. Мне нравятся Звёздные Войны"
+        android:text="@string/hint_reason_1"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="2. Мне нужно было чем-то увеличить высоту фрагмента"
+        android:text="@string/hint_reason_2"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="3. Двух причин не хватило для \nувеличения высоты"
+        android:text="@string/hint_reason_3"
         android:textSize="18sp" />
 
 </LinearLayout>
