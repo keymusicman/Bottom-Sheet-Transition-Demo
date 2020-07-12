@@ -45,11 +45,11 @@ class BottomSheetSharedTransition : Transition {
     override fun getTransitionProperties(): Array<String> = TransitionProperties
 
     override fun captureStartValues(transitionValues: TransitionValues) {
-        // Запоминаем начальную высоту View...
+        // Remember View start height...
         transitionValues.values[PROP_HEIGHT] = transitionValues.view.height
         transitionValues.values[PROP_VIEW_TYPE] = "start"
 
-        // ... и затем закрепляем высоту контейнера фрагмента
+        // ... and then fix container height
         transitionValues.view.parent
             .let { it as? View }
             ?.also { view ->
@@ -61,7 +61,7 @@ class BottomSheetSharedTransition : Transition {
     }
 
     override fun captureEndValues(transitionValues: TransitionValues) {
-        // Измеряем и запоминаем высоту View
+        // measure and remember View height
         transitionValues.values[PROP_HEIGHT] = getViewHeight(transitionValues.view.parent as View)
         transitionValues.values[PROP_VIEW_TYPE] = "end"
     }
@@ -103,14 +103,14 @@ class BottomSheetSharedTransition : Transition {
         .apply {
             val container = view.parent.let { it as View }
 
-            // изменяем высоту контейнера фрагментов
+            // measure fragments container height
             addUpdateListener { animation ->
                 container.updateLayoutParams<ViewGroup.LayoutParams> {
                     height = animation.animatedValue as Int
                 }
             }
 
-            // окончании анимации устанавливаем высоту контейнера WRAP_CONTENT
+            // set height to WRAP_CONTENT on animation end
             doOnEnd {
                 container.updateLayoutParams<ViewGroup.LayoutParams> {
                     height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -119,21 +119,21 @@ class BottomSheetSharedTransition : Transition {
         }
 
     private fun getViewHeight(view: View): Int {
-        // Получаем ширину экрана
+        // Get screen width
         val deviceWidth = getScreenWidth(view)
 
-        // Попросим View измерить себя при указанной ширине экрана
+        // measure view height with the exact width
         val widthMeasureSpec =
             View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.EXACTLY)
         val heightMeasureSpec =
             View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
 
         return view
-            // измеряем:
+            // measure:
             .apply { measure(widthMeasureSpec, heightMeasureSpec) }
-            // получаем измеренную высоту:
+            // get measured height
             .measuredHeight
-            // если View хочет занять высоту больше доступной высоты экрана, мы должны вернуть высоту экрана:
+            // if the View wanna take more space than available, return screen height
             .coerceAtMost(getScreenHeight(view))
     }
 
